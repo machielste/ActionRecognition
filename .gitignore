@@ -1,0 +1,14 @@
+backup
+classifiedVideos
+data
+data_old
+__pycache__
+old code
+framesOfVideo
+tests
+vectors
+videosToClassify
+video.mp4
+videoSmall.mp4
+.idea
+model.h5

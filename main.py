@@ -18,6 +18,7 @@ config.log_device_placement = True  # to log device placement (on which device t
 sess = tf.Session(config=config)
 set_session(sess)
 
+# Test
 
 def createV():
     x = createVectors()

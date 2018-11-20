@@ -8,6 +8,7 @@ from sklearn import preprocessing
 
 from imageToSingleVector import Extractor
 
+
 class realtime:
     def __init__(self):
         self.imToVec = Extractor()
@@ -15,8 +16,9 @@ class realtime:
         self.le = preprocessing.LabelEncoder()
         self.classes = [dI for dI in os.listdir('vectors') if os.path.isdir(os.path.join('vectors', dI))]
         self.le.fit(self.classes)
-
         self.start_time = time.time()
+
+        # current model has 72% val accuracy
 
     def function(self):
         framearray = []

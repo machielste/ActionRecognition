@@ -18,6 +18,7 @@ config.log_device_placement = True  # to log device placement (on which device t
 sess = tf.Session(config=config)
 set_session(sess)
 
+
 def createV():
     x = createVectors()
     x.createVectors()
@@ -81,5 +82,6 @@ def train():
               validation_data=(np.array(X_test), np.array(y_test)), shuffle=True, class_weight=class_weights, )
 
     model.save('model.h5')
+
 
 train()

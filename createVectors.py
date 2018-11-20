@@ -9,6 +9,7 @@ from videoToVectorList import Process
 
 class createVectors():
 
+
     def doWork(self, folderName, max):
 
         x = Process()
@@ -40,3 +41,6 @@ class createVectors():
         for folder in folderNameArray:
             ##Second arg is maz videos per class
             self.doWork(folder, 1100)
+
+
+createVectors()

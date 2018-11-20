@@ -9,7 +9,6 @@ from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
 
-from createVectors import createVectors
 from model import LstmModel
 
 config = tf.ConfigProto()
@@ -18,10 +17,6 @@ config.log_device_placement = True  # to log device placement (on which device t
 sess = tf.Session(config=config)
 set_session(sess)
 
-
-def createV():
-    x = createVectors()
-    x.createVectors()
 
 
 def train():

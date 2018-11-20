@@ -3,7 +3,6 @@ classifiedVideos
 data
 data_old
 __pycache__
-old code
 framesOfVideo
 tests
 vectors

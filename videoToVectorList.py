@@ -1,4 +1,4 @@
-from imageToSingleVector import Extractor
+from imageToVector import Extractor
 
 
 class Process():

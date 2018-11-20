@@ -6,7 +6,7 @@ import numpy as np
 from keras.models import load_model
 from sklearn import preprocessing
 
-from imageToSingleVector import Extractor
+from imageToVector import Extractor
 
 
 class realtime:

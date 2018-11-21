@@ -12,8 +12,8 @@ from sklearn.utils import compute_class_weight
 from model import LstmModel
 
 config = tf.ConfigProto()
-config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
-config.log_device_placement = True  # to log device placement (on which device the operation ran)
+config.gpu_options.allow_growth = True  ##Dynamically grow the memory used on the GPU
+config.log_device_placement = True  ##To log device placement (on which device the operation ran)
 sess = tf.Session(config=config)
 set_session(sess)
 
@@ -22,8 +22,8 @@ set_session(sess)
 def train():
     ##init
     config = tf.ConfigProto()
-    config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
-    config.log_device_placement = True  # to log device placement (on which device the operation ran)
+    config.gpu_options.allow_growth = True  ##Dynamically grow the memory used on the GPU
+    config.log_device_placement = True  ##To log device placement (on which device the operation ran)
     sess = tf.Session(config=config)
     set_session(sess)
     x = LstmModel()

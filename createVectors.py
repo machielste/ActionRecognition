@@ -43,4 +43,5 @@ class createVectors():
             self.doWork(folder, 1600)
 
 
-createVectors()
+x = createVectors()
+x.createVectors()

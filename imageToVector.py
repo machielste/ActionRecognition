@@ -3,7 +3,7 @@ from keras.applications.vgg19 import VGG19, preprocess_input
 
 
 class Extractor():
-    ##Convert a single video frame to a vector, this vectors is the output of the second last layer of inceptionV3
+    ##Convert a single video frame to a vector, this vectors is the output of the second last layer of VGG19
     def __init__(self):
         self.model = VGG19(
             weights='imagenet',

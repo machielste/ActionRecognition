@@ -38,7 +38,7 @@ class realtime:
                     framearray.append(inceptionFrame)
             else:
 
-                framearray.pop()
+                framearray.pop(0)
                 framearray.append(inceptionFrame)
 
                 ##Put text on our frame, containing the current framerate and the classification

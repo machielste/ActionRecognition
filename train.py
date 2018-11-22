@@ -41,7 +41,7 @@ def train():
     ##Get all the vector files and check their label, save all of it to the label and data lists
     for path, subdirs, files in os.walk('vectors'):
         for name in files:
-            if videosPerClass > 1150:
+            if videosPerClass > 2500:
                 videosPerClass = 0
                 break
 
@@ -61,7 +61,7 @@ def train():
 
     (X_train, X_test, y_train, y_test) = train_test_split(data, labels, test_size=0.25)
 
-    ##Account for differences in file count from one class to the other
+    ##Account for differences in file count from one class to the other, allthough we currently
     class_weights = compute_class_weight('balanced', (np.unique(y_train)), y_train)
 
     ##One hot encoding

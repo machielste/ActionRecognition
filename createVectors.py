@@ -40,8 +40,7 @@ class createVectors():
 
         for folder in folderNameArray:
             ##Second arg is maz videos per class
-            self.doWork(folder, 1600)
-
+            self.doWork(folder, 2500)
 
 x = createVectors()
 x.createVectors()

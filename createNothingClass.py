@@ -1,15 +1,39 @@
-import glob
 import os
 
-from shutil import copy2
-
 ##Get names of classes we dont want to take video's from
-badFolderList = [dI for dI in os.listdir('data') if os.path.isdir(os.path.join('data', dI))]
+badFolderList = []
+nothingClassFolderNames = []
 
-for pathAndFilename in sorted(glob.iglob(r"F:\backup project\Moments_in_Time_256x256_30fps\training")):
-    if pathAndFilename not in badFolderList:
-        for videoPathAndFilename in sorted(glob.iglob(pathAndFilename)):
-            i = 0
-            while i < 20:
-                copy2(videoPathAndFilename, "data/nothing/")
-                i += 1
+for filepath, x, x in os.walk((r"data")):
+    badFolderList.append(filepath)
+
+badFolderList.pop(0)
+
+for item in badFolderList:
+    # print(item)
+    sep = r'data'
+    item = item.split(sep, 1)[1]
+    item = item[1:]
+    print(item)
+
+##Badfolderlist now contains the names of classes we don't want to take videos from
+
+
+for filepath, y, g in os.walk((r"F:\backup project\Moments_in_Time_256x256_30fps\training")):
+
+    if any(x in filepath for x in badFolderList):
+        print("Bad class found")
+        continue
+    else:
+        nothingClassFolderNames.append(filepath)
+
+nothingClassFolderNames.pop(0)
+
+for item in nothingClassFolderNames:
+    i = 0
+    for filepath, x, x in os.walk((r"F:\backup project\Moments_in_Time_256x256_30fps\training")):
+        if i > 20: break
+        # copy here
+        i += 1
+
+print('\n'.join('{}: {}'.format(*k) for k in enumerate(nothingClassFolderNames)))

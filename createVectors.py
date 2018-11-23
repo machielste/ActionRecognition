@@ -16,7 +16,6 @@ class createVectors():
         fileCount = 0
         ##Loop over the first X videos in folder and convert them to inception v3'd vectors
         for pathAndFilename in sorted(glob.iglob(os.path.join(r"data/" + folderName, r'*.mp4'))):
-            print(pathAndFilename + "<< current video")
             cap = cv2.VideoCapture(pathAndFilename)
 
             # Create the folder to store our vectors for this specific video class
@@ -25,6 +24,7 @@ class createVectors():
             ##Make sure the file doesn't already exist
             if not os.path.exists(r"vectors/" + folderName + "/" + str(fileCount) + ".npy"):
                 np.save(r"vectors/" + folderName + "/" + str(fileCount), x.convToVector(cap))
+                print(pathAndFilename + "<< current video")
             else:
                 print("file number " + str(fileCount) + " already exists, skipping")
 

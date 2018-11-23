@@ -1,7 +1,8 @@
 import os
-
 from shutil import copy
 
+
+##This script is a little messy, but it works perfectly...
 
 def absoluteFilePaths(directory):
     for dirpath, _, filenames in os.walk(directory):
@@ -53,5 +54,3 @@ for item in nothingClassFolderNames:
         else:
             copy(filepath, 'data/nothing/')
             i += 1
-
-#print('\n'.join('{}: {}'.format(*k) for k in enumerate(nothingClassFolderNames)))

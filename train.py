@@ -65,8 +65,8 @@ def train():
     class_weights = compute_class_weight('balanced', (np.unique(y_train)), y_train)
 
     ##One hot encoding
-    y_train = keras.utils.to_categorical(y_train, num_classes=10)
-    y_test = keras.utils.to_categorical(y_test, num_classes=10)
+    y_train = keras.utils.to_categorical(y_train, num_classes=11)
+    y_test = keras.utils.to_categorical(y_test, num_classes=11)
 
     ##Save checkpoint files to get the very best version of the model after a training session
     filepath = "weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"

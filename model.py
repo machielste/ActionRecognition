@@ -33,6 +33,6 @@ class LstmModel():
                        ))
         model.add(Dense(512, activation='relu', ))
         model.add(Dropout(0.5))
-        model.add(Dense(10, activation='softmax'))
+        model.add(Dense(11, activation='softmax'))
 
         return model

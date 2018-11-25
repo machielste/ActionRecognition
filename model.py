@@ -31,7 +31,7 @@ class LstmModel():
                        input_shape=self.input_shape,
                        dropout=0.5, recurrent_dropout=0.4
                        ))
-        model.add(Dense(512, activation='relu', ))
+        model.add(Dense(1024, activation='relu', ))
         model.add(Dropout(0.5))
         model.add(Dense(11, activation='softmax'))
 

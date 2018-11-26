@@ -63,6 +63,7 @@ def train():
 
     ##Account for differences in file count from one class to the other, allthough we currently
     class_weights = compute_class_weight('balanced', (np.unique(y_train)), y_train)
+    class_weights = dict(enumerate(class_weights))
 
     ##One hot encoding
     y_train = keras.utils.to_categorical(y_train, num_classes=11)

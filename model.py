@@ -8,6 +8,7 @@ from keras.optimizers import Adadelta
 
 class LstmModel():
     def __init__(self, features_length=512):
+        ##Init for custom lstm model
         self.load_model = load_model
         self.feature_queue = deque()
 
@@ -25,7 +26,7 @@ class LstmModel():
         print(self.model.summary())
 
     def lstm(self):
-        ##Model.
+        ##Custom Lstm model.
         model = Sequential()
         model.add(LSTM(512, return_sequences=False,
                        input_shape=self.input_shape,

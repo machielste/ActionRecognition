@@ -21,7 +21,6 @@ badFolderList.pop(0)
 
 newList = []
 for item in badFolderList:
-    # print(item)
     sep = r'data'
     item = item.split(sep, 1)[1]
     item = item[1:]
@@ -34,7 +33,7 @@ badFolderList = newList
 ##Badfolderlist now contains the names of classes we don't want to take videos from
 
 
-
+##Take some videos from every class, but not from the clasess we are using
 for filepath, y, g in os.walk((r"F:\backup project\Moments_in_Time_256x256_30fps\training")):
 
     if any(x in filepath for x in badFolderList):
@@ -49,6 +48,7 @@ for item in nothingClassFolderNames:
     i = 0
     for filepath in absoluteFilePaths(item):
         print(filepath)
+        ##The number is the ammound of videos taken per class
         if i > 7:
             break
         else:

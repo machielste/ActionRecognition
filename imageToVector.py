@@ -1,4 +1,5 @@
 import numpy as np
+from PIL import Image
 from keras.applications.vgg19 import VGG19, preprocess_input
 
 
@@ -12,7 +13,9 @@ class Extractor():
         )
 
     def extract(self, image_path):
-        x = image_path
+        ##Using pillow to reszie image as keras preprocessing is very very slow, using a more recent pillow fork would be even faster
+        x = Image.fromarray(image_path)
+        x = x.resize([224, 224])
         x = np.expand_dims(x, axis=0)
         x = preprocess_input(x)
 

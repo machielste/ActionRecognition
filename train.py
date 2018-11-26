@@ -50,7 +50,6 @@ def train():
     random.shuffle(imagePaths)
     for imagePath in imagePaths:
         numpy = np.load(imagePath)
-        # for val in numpy:
         data.append(numpy)
         label = imagePath.split('\\')[1]
         labels.append(label)
@@ -61,9 +60,15 @@ def train():
 
     (X_train, X_test, y_train, y_test) = train_test_split(data, labels, test_size=0.25)
 
-    ##Account for differences in file count from one class to the other, allthough we currently
-    class_weights = compute_class_weight('balanced', (np.unique(y_train)), y_train)
-    class_weights = dict(enumerate(class_weights))
+    ##Account for differences in file count from one class to the other
+    encoder = preprocessing.LabelEncoder()
+    encoder.fit(y_train)
+
+    y_train = encoder.transform(y_train)
+    y_test = encoder.transform(y_test)
+
+    class_weight_list = compute_class_weight('balanced', np.unique(y_train), y_train)
+    class_weights = dict(zip(np.unique(y_train), class_weight_list))
 
     ##One hot encoding
     y_train = keras.utils.to_categorical(y_train, num_classes=11)

@@ -23,7 +23,7 @@ class realtime:
     def function(self):
         framearray = []
 
-        cap = cv2.VideoCapture("realtimeVideos/wavingVideo.mp4")
+        cap = cv2.VideoCapture("realtimeVideos/walkingVideo.mp4")
 
         while (True):
             # Capture frame-by-frame

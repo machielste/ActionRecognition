@@ -17,7 +17,6 @@ sess = tf.Session(config=config)
 set_session(sess)
 
 
-
 def train():
     ##init
     config = tf.ConfigProto()

@@ -18,16 +18,21 @@ class realtime:
         self.le.fit(self.classes)
         self.start_time = time.time()
 
-        # current model has 72% val accuracy
-
     def function(self):
         framearray = []
 
-        cap = cv2.VideoCapture("realtimeVideos/walkingVideo.mp4")
+        cap = cv2.VideoCapture("realtimeVideos/exersizingVideo.mp4")
 
         while (True):
             # Capture frame-by-frame
             ret, frame = cap.read()
+
+            ##Stop the program when we are out of frames
+            if ret == False:
+                cap.release()
+                cv2.destroyAllWindows()
+                print("Video has ended")
+                quit()
 
             inceptionFrame = self.imToVec.extract(frame)
 

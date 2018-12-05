@@ -9,10 +9,11 @@ from videoToVectorList import Process
 
 class createVectors():
 
+    def __init__(self):
+        self.x = Process
 
     def doWork(self, folderName, max):
 
-        x = Process()
         fileCount = 0
         ##Loop over the first X videos in folder and convert them to inception v3'd vectors
         for pathAndFilename in sorted(glob.iglob(os.path.join(r"data/" + folderName, r'*.mp4'))):
@@ -23,7 +24,7 @@ class createVectors():
                 os.makedirs("vectors" + "/" + folderName)
             ##Make sure the file doesn't already exist
             if not os.path.exists(r"vectors/" + folderName + "/" + str(fileCount) + ".npy"):
-                np.save(r"vectors/" + folderName + "/" + str(fileCount), x.convToVector(cap))
+                np.save(r"vectors/" + folderName + "/" + str(fileCount), self.x.convToVector(cap))
                 print(pathAndFilename + "<< current video")
             else:
                 print("file number " + str(fileCount) + " already exists, skipping")
@@ -41,6 +42,7 @@ class createVectors():
         for folder in folderNameArray:
             ##Second arg is maz videos per class
             self.doWork(folder, 2500)
+
 
 x = createVectors()
 x.createVectors()

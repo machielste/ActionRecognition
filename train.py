@@ -7,7 +7,6 @@ import tensorflow as tf
 from keras.backend.tensorflow_backend import set_session
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
-from sklearn.utils import compute_class_weight
 
 from model import LstmModel
 
@@ -57,6 +56,7 @@ def train():
     ##Normalize labels using LabelEncoder
     labels = np.array(labels)
     labels = le.transform(labels)
+    print(np.unique(labels))
 
     (X_train, X_test, y_train, y_test) = train_test_split(data, labels, test_size=0.25)
 
@@ -67,8 +67,10 @@ def train():
     y_train = encoder.transform(y_train)
     y_test = encoder.transform(y_test)
 
-    class_weight_list = compute_class_weight('balanced', np.unique(y_train), y_train)
-    class_weights = dict(zip(np.unique(y_train), class_weight_list))
+    # Class weighting is currently commented out because all of our clasess contain 2500 entries
+
+    # class_weight_list = compute_class_weight('balanced', np.unique(y_train), y_train)
+    # class_weights = dict(zip(np.unique(y_train), class_weight_list))
 
     ##One hot encoding
     y_train = keras.utils.to_categorical(y_train, num_classes=10)
@@ -80,7 +82,7 @@ def train():
     # callbacks_list = [checkpoint]
 
     model.fit(np.array(X_train), np.array(y_train), batch_size=BatchSize, epochs=Epochs, verbose=1,
-              validation_data=(np.array(X_test), np.array(y_test)), shuffle=True, class_weight=class_weights, )
+              validation_data=(np.array(X_test), np.array(y_test)), shuffle=True, )
 
     model.save('model.h5')
 

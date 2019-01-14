@@ -2,6 +2,7 @@ import os
 import random
 
 import keras
+import keras.utils.vis_utils
 import numpy as np
 import tensorflow as tf
 from keras.backend.tensorflow_backend import set_session
@@ -29,7 +30,7 @@ def train():
     classes = [dI for dI in os.listdir('vectors') if os.path.isdir(os.path.join('vectors', dI))]
     le.fit(classes)
     model = x.model
-    Epochs = 50
+    Epochs = 25
     BatchSize = 22
     data = []
     labels = []

@@ -21,7 +21,7 @@ class realtime:
     def function(self):
         framearray = []
 
-        cap = cv2.VideoCapture("realtimeVideos/exersizingVideo.mp4")
+        cap = cv2.VideoCapture("realtimeVideos/dancing.mp4")
 
         while (True):
             # Capture frame-by-frame
@@ -48,11 +48,11 @@ class realtime:
 
                 ##Put text on our frame, containing the current framerate and the classification
                 cv2.putText(frame, str(self.returnAwnser(framearray)), (20, 50),
-                            cv2.FONT_HERSHEY_COMPLEX_SMALL, .7,
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, 2,
                             (0, 0, 255))
 
                 cv2.putText(frame, "fps: " + str(round(1 / (time.time() - self.start_time), 3)), (20, 80),
-                            cv2.FONT_HERSHEY_COMPLEX_SMALL, .7,
+                            cv2.FONT_HERSHEY_COMPLEX_SMALL, 2,
                             (0, 0, 255))
                 self.start_time = time.time()
 

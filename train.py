@@ -30,7 +30,7 @@ def train():
     classes = [dI for dI in os.listdir('vectors') if os.path.isdir(os.path.join('vectors', dI))]
     le.fit(classes)
     model = x.model
-    Epochs = 25
+    Epochs = 1
     BatchSize = 22
     data = []
     labels = []

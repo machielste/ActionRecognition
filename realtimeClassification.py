@@ -20,21 +20,23 @@ class realtime:
 
     def function(self):
         framearray = []
-
+        elapsed_frames = 0
         cap = cv2.VideoCapture("realtimeVideos/dancing.mp4")
-
+        max_frames = 500
         while (True):
             # Capture frame-by-frame
             ret, frame = cap.read()
-
+            elapsed_frames += 1
             ##Stop the program when we are out of frames
-            if ret == False:
+            if ret == False or elapsed_frames > max_frames:
                 cap.release()
                 cv2.destroyAllWindows()
                 print("Video has ended")
                 quit()
 
+            # inception = time.time()
             inceptionFrame = self.imToVec.extract(frame)
+            #print("elapsed Inception time: " + str((time.time() - inception) * 1000))
 
             # Buffer of the last 87 frames for the lstm network to process
             if len(framearray) < 87:
@@ -63,7 +65,7 @@ class realtime:
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
-        # When everything done, release the capture
+        # When everything is done, release the capture
         cap.release()
         cv2.destroyAllWindows()
 
@@ -95,7 +97,9 @@ class realtime:
         return result
 
     def returnAwnser(self, array):
+        #lstm = time.time()
         result = self.getResult(array)
+        #print("elapsed LSTM time: " + str((time.time() - lstm) * 1000))
         return result[0]
 
 

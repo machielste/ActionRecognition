@@ -23,16 +23,21 @@ class LstmModel():
         self.model.compile(loss='categorical_crossentropy', optimizer=optimizer,
                            metrics=metrics)
 
-        print(self.model.summary())
+        # print(self.model.summary())
 
     def lstm(self):
         ##Custom Lstm model.
         model = Sequential()
-        model.add(LSTM(512, return_sequences=False,
+        model.add(Dense(512, activation='relu', ))
+        model.add(Dropout(0.5))
+        model.add(LSTM(256,
+                       return_sequences=False,
                        input_shape=self.input_shape,
-                       dropout=0.5, recurrent_dropout=0.4
+                       dropout=0.5, recurrent_dropout=0.4,
+                       unroll=True,
+                       unit_forget_bias=True
                        ))
-        model.add(Dense(1024, activation='relu', ))
+        model.add(Dense(128, activation='relu', ))
         model.add(Dropout(0.5))
         model.add(Dense(10, activation='softmax'))
 

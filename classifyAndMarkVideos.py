@@ -1,8 +1,8 @@
 import os
-from cv2 import VideoWriter_fourcc
 
 import cv2
 import numpy as np
+from cv2 import VideoWriter_fourcc
 from keras.models import load_model
 from sklearn import preprocessing
 
@@ -54,7 +54,7 @@ class classifyAndMarkVideos:
         for path, subdirs, files in os.walk('videosToClassify'):
             for video in files:
                 classificationList.append(self.getResult(os.path.join(path, video)))
-
+        # print(classificationList)
         return classificationList
 
     def createVideoWithText(self, dataToWrite, video, count):
@@ -62,7 +62,7 @@ class classifyAndMarkVideos:
         ext = 'mp4'
         codec = 'mp4v'
         savepath = "classifiedVideos/" + str(count) + "__%s.%s" % (codec, ext)
-
+        print(count)
         cap = cv2.VideoCapture(video)
 
         fourcc = VideoWriter_fourcc(*codec)
@@ -72,7 +72,7 @@ class classifyAndMarkVideos:
         while True:
             ret, frame = cap.read()
             if ret:
-                print("writing frame: " + str(framecount))
+                #print("writing frame: " + str(framecount))
                 framecount += 1
                 ##Put text on our frame
                 cv2.putText(frame, str(dataToWrite), (50, 50), cv2.FONT_HERSHEY_COMPLEX_SMALL, .7, (0, 0, 255))
@@ -92,6 +92,7 @@ class classifyAndMarkVideos:
         for path, subdirs, files in os.walk('videosToClassify'):
             for video in files:
                 vList.append(os.path.join(path, video))
+                print("adding video to list: " + str(os.path.join(path, video)))
 
         for i in range(len(cList)):
             self.createVideoWithText(cList[i], vList[i], i)

@@ -9,7 +9,7 @@ from keras.backend.tensorflow_backend import set_session
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 
-from model import LstmModel
+from model import get_model
 
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True  ##Dynamically grow the memory used on the GPU
@@ -19,25 +19,28 @@ set_session(sess)
 
 
 def train():
-    ##init
+    # init
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True  ##Dynamically grow the memory used on the GPU
     config.log_device_placement = True  ##To log device placement (on which device the operation ran)
     sess = tf.Session(config=config)
     set_session(sess)
-    x = LstmModel()
-    le = preprocessing.LabelEncoder()
+
+    Epochs = 50
+    BatchSize = 32
+
+    encoder = preprocessing.LabelEncoder()
     classes = [dI for dI in os.listdir('vectors') if os.path.isdir(os.path.join('vectors', dI))]
-    le.fit(classes)
-    model = x.model
-    Epochs = 1
-    BatchSize = 22
+    encoder.fit(classes)
+
+    model = get_model()
+
     data = []
     labels = []
     imagePaths = []
     videosPerClass = 0
 
-    ##Get all the vector files and check their label, save all of it to the label and data lists
+    # Get all the vector files and check their label, save all of it to the label and data lists
     for path, subdirs, files in os.walk('vectors'):
         for name in files:
             if videosPerClass > 2500:
@@ -53,38 +56,18 @@ def train():
         label = imagePath.split('\\')[1]
         labels.append(label)
 
-    ##Normalize labels using LabelEncoder
-    labels = np.array(labels)
-    labels = le.transform(labels)
-    print(np.unique(labels))
-
+    labels = encoder.transform(np.asarray(labels))
     (X_train, X_test, y_train, y_test) = train_test_split(data, labels, test_size=0.25)
 
-    ##Account for differences in file count from one class to the other
-    encoder = preprocessing.LabelEncoder()
-    encoder.fit(y_train)
-
-    y_train = encoder.transform(y_train)
-    y_test = encoder.transform(y_test)
-
-    # Class weighting is currently commented out because all of our clasess contain 2500 entries
-
-    # class_weight_list = compute_class_weight('balanced', np.unique(y_train), y_train)
-    # class_weights = dict(zip(np.unique(y_train), class_weight_list))
-
-    ##One hot encoding
+    # One hot encoding
     y_train = keras.utils.to_categorical(y_train, num_classes=10)
     y_test = keras.utils.to_categorical(y_test, num_classes=10)
 
-    ##Save checkpoint files to get the very best version of the model after a training session
-    filepath = "weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
-    # checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-    # callbacks_list = [checkpoint]
-
     model.fit(np.array(X_train), np.array(y_train), batch_size=BatchSize, epochs=Epochs, verbose=1,
-              validation_data=(np.array(X_test), np.array(y_test)), shuffle=True, )
+              validation_data=(np.array(X_test), np.array(y_test)), shuffle=True)
 
     model.save('model.h5')
 
 
-train()
+if __name__ == '__main__':
+    train()

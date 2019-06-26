@@ -1,10 +1,9 @@
 import numpy as np
 from PIL import Image
-from keras.applications.vgg19 import VGG19, preprocess_input
-
+from keras.applications.vgg19 import VGG19
 
 class Extractor():
-    ##Convert a single video frame to a vector, this vectors is the output of the second last layer of VGG19
+    # Convert a single video frame to a vector, this vectors is the output of the second last layer of VGG19
     def __init__(self):
         self.model = VGG19(
             weights='imagenet',
@@ -13,14 +12,12 @@ class Extractor():
         )
 
     def extract(self, image_path):
-        ##Using pillow to reszie image as keras preprocessing is very very slow, using a more recent pillow fork would be even faster
+        # Using pillow to reszie image as keras preprocessing is slow
         x = Image.fromarray(image_path)
         x = x.resize([224, 224])
         x = np.expand_dims(x, axis=0)
-        x = preprocess_input(x)
-
-        # Get the prediction.
 
         features = self.model.predict(x)
+
         features = features[0]
         return features

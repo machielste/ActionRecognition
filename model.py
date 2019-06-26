@@ -1,44 +1,54 @@
-from collections import deque
-
-from keras.layers import Dense, Dropout
+from keras.layers import Dense, Dropout, CuDNNLSTM, CuDNNGRU
 from keras.layers.recurrent import LSTM
-from keras.models import Sequential, load_model
+from keras.models import Sequential
 from keras.optimizers import Adadelta
 
 
-class LstmModel():
-    def __init__(self, features_length=512):
-        ##Init for custom lstm model
-        self.load_model = load_model
-        self.feature_queue = deque()
+def get_model():
+    input_shape = (87, 512)
+    model = lstm(input_shape)
 
-        metrics = ['accuracy']
+    # Compile the chosen network
+    model.compile(loss='categorical_crossentropy', optimizer=Adadelta(), metrics=['accuracy'])
 
-        print("Loading LSTM model.")
-        self.input_shape = (87, features_length)
-        self.model = self.lstm()
+    return model
 
-        ##Now compile the network.
-        optimizer = Adadelta()
-        self.model.compile(loss='categorical_crossentropy', optimizer=optimizer,
-                           metrics=metrics)
 
-        # print(self.model.summary())
+def lstm(input_shape):
+    ##Custom Lstm model.
+    model = Sequential()
+    model.add(LSTM(512,
+                   return_sequences=False,
+                   input_shape=input_shape,
+                   dropout=0.5,
+                   recurrent_dropout=0.4,
+                   unroll=True,
+                   unit_forget_bias=True
+                   ))
+    model.add(Dense(256, activation='relu', ))
+    model.add(Dropout(0.5))
+    model.add(Dense(10, activation='softmax'))
 
-    def lstm(self):
-        ##Custom Lstm model.
-        model = Sequential()
-        model.add(Dense(512, activation='relu', ))
-        model.add(Dropout(0.5))
-        model.add(LSTM(256,
-                       return_sequences=False,
-                       input_shape=self.input_shape,
-                       dropout=0.5, recurrent_dropout=0.4,
-                       unroll=True,
-                       unit_forget_bias=True
-                       ))
-        model.add(Dense(128, activation='relu', ))
-        model.add(Dropout(0.5))
-        model.add(Dense(10, activation='softmax'))
+    return model
 
-        return model
+
+def CuDNNLSTM(self):
+    ##Custom CuDNNLSTM model.
+    model = Sequential()
+    model.add(CuDNNLSTM(512))
+    model.add(Dense(256, activation='relu', ))
+    model.add(Dropout(0.5))
+    model.add(Dense(10, activation='softmax'))
+
+    return model
+
+
+def CuDNNGRU(self):
+    ##Custom GruDNNLSTM model.
+    model = Sequential()
+    model.add(CuDNNGRU(512))
+    model.add(Dense(256, activation='relu', ))
+    model.add(Dropout(0.5))
+    model.add(Dense(10, activation='softmax'))
+
+    return model

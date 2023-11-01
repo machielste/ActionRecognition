@@ -5,6 +5,20 @@ from keras.optimizers import Adadelta
 
 
 def get_model():
+    """
+    Choose and compile a model in preparation for training
+
+    Used concepts:
+
+    Categorical crossentropy will compare the distribution of the predictions (the activations in the output layer,
+    one for each class)
+    with the true distribution, where the probability of the true class is set to 1 and 0 for the other classes.
+
+    Adadelta dynamically adapts over time using only first order information and has minimal computational overhead
+    beyond vanilla stochastic gradient descent
+
+    :return: Compiled model, ready to be trained
+    """
     input_shape = (87, 512)
     model = lstm(input_shape)
 
@@ -15,7 +29,6 @@ def get_model():
 
 
 def lstm(input_shape):
-    ##Custom Lstm model.
     model = Sequential()
     model.add(LSTM(512,
                    return_sequences=False,
@@ -32,8 +45,7 @@ def lstm(input_shape):
     return model
 
 
-def CuDNNLSTM(self):
-    ##Custom CuDNNLSTM model.
+def CuDNNLSTM():
     model = Sequential()
     model.add(CuDNNLSTM(512))
     model.add(Dense(256, activation='relu', ))
@@ -43,8 +55,7 @@ def CuDNNLSTM(self):
     return model
 
 
-def CuDNNGRU(self):
-    ##Custom GruDNNLSTM model.
+def CuDNNGRU():
     model = Sequential()
     model.add(CuDNNGRU(512))
     model.add(Dense(256, activation='relu', ))
